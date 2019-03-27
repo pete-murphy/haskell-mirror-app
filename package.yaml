@@ -23,9 +23,12 @@ dependencies:
 - base >= 4.7 && < 5
 - lifted-base
 - aeson
+- bytestring
 - conduit
 - conduit-extra
+- http-types
 - warp
+- wai
 - wai-conduit
 
 library:
