@@ -1,3 +1,5 @@
 .stack-work/
 simple.cabal
 *~
+*.swp
+*.swo

@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase        #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 import           Control.Exception        (SomeException)
@@ -12,15 +13,16 @@ import           Network.HTTP.Types       (status200, status400)
 import           Network.Wai              (Application, Response, responseLBS)
 import           Network.Wai.Conduit      (sourceRequestBody)
 import           Network.Wai.Handler.Warp (run)
-import           System.Environment       (getEnv)
+import           System.Environment       (lookupEnv)
 
-getPort :: IO Int
-getPort = read <$> getEnv "PORT"
+lookupPort :: IO (Maybe Int)
+lookupPort = fmap read <$> lookupEnv "PORT"
 
 main :: IO ()
-main = do
-  port <- getPort
-  run port app
+main =
+  lookupPort >>= \case
+    Just n -> run n app
+    _ -> run 9000 app
 
 app :: Application
 app req sendResponse =
